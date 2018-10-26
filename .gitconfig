@@ -3,4 +3,4 @@
 
     [mergetool "unityyamlmerge"]
     trustExitCode = false
-    cmd = 'E:\Unity\2018.2.13f1\Editor\Data\Tools' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+    cmd = 'UnityYAMLMerge.exe' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
