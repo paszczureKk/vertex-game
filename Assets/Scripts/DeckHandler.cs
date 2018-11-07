@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class DeckHandler : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private List<CardAsset> deck;
+    private List<GameObject> hand;
+
+    public GameObject spawnPoint;
+    public GameObject cardPreFab;
+
+    private void Awake()
+    {
+        deck = new List<CardAsset>(Resources.LoadAll<CardAsset>("Assets/Resources/Cards"));
+    }
 }
