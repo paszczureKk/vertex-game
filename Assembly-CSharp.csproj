@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ScriptableObjects\CardAsset.cs" />
     <Compile Include="Assets\Scripts\DeckHandler.cs" />
     <Compile Include="Assets\Scripts\GameHandler.cs" />
     <Compile Include="Assets\Scripts\TimeHandler.cs" />

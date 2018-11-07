@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GameHandler : MonoBehaviour {
 
@@ -41,5 +42,10 @@ public class GameHandler : MonoBehaviour {
             Destroy(gameObject);
         else
             instance = this;
+
+        List <CardAsset> Deck = new List<CardAsset>(Resources.LoadAll<CardAsset>("Assets/ScriptableObjects"));
+
+        CardAsset t;
+        t.opis = 
     }
 }
