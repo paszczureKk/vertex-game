@@ -12,8 +12,8 @@
 # On Windows %programs% is replaced with "C:\Program Files" and "C:\Program Files (x86)" there by resulting in two entries to try out
 # On OSX %programs% is replaced with "/Applications" and "$HOME/Applications" thereby resulting in two entries to try out
 
-unity use "%programs%\YouFallbackMergeToolForScenesHere.exe" "%l" "%r" "%b" "%d"
-prefab use "%programs%\YouFallbackMergeToolForPrefabsHere.exe" "%l" "%r" "%b" "%d"
+unity use "%programs%\UnityYAMLMerge.exe" "%l" "%r" "%b" "%d"
+prefab use "%programs%\UnityYAMLMerge.exe" "%l" "%r" "%b" "%d"
 
 #
 # Default fallbacks for unknown files. First tool found is used.
