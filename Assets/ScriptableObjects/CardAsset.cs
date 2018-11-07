@@ -9,12 +9,16 @@ public class CardAsset : ScriptableObject
     private const int MAX_PROP_VALUE = 10;
     #endregion
 
+    [Header("Main")]
     [Range(1, MAX_CARD_LEVEL)]
     public int level;
+    [TextArea(1, 1)]
+    public string CardName;
     public Sprite image;
+    [Space(8)]
 
     [TextArea(2,3)]
-    public string description;
+    public string brief;
 
     #region PROPERTIES
     [Header("Properties")]
@@ -23,34 +27,33 @@ public class CardAsset : ScriptableObject
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int water;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int wind;
-    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int earth;
-    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int death;
-    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int life;
-    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int light;
-    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int darkness;
-    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int power;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int spirit;
+    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
+    public int air;
+    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
+    public int earth;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int curse;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int fortune;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
+    public int life;
+    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
+    public int death;
+    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int war;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int peace;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
-    public int abundance;
+    public int light;
+    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
+    public int darkness;
+    [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
+    public int abundace;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int disaster;
-    #endregion
 
     [Header("Karma")]
     public int karma;

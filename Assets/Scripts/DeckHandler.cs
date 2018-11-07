@@ -3,14 +3,22 @@ using UnityEngine;
 
 public class DeckHandler : MonoBehaviour {
 
-    private List<CardAsset> deck;
-    private List<GameObject> hand;
+    [SerializeField]
+    private GameObject cardPrefab;
+    [SerializeField]
+    private Transform parent;
 
-    public GameObject spawnPoint;
-    public GameObject cardPreFab;
+    public int cardCap = 6;
+    List<CardAsset> cardData = null;
+    List<GameObject> cards = null;
 
-    private void Awake()
-    {
-        deck = new List<CardAsset>(Resources.LoadAll<CardAsset>("Assets/Resources/Cards"));
+	void Start () {
+        cardData = new List<CardAsset>(Resources.LoadAll<CardAsset>("Assets/Resources/Cards"));
+        for (int i = 0; i < cardCap; ++i)
+            cards.Add(Instantiate(cardPrefab, parent));
     }
+	
+	void Update () {
+		
+	}
 }
