@@ -13,12 +13,12 @@ public class CardAsset : ScriptableObject
     [Range(1, MAX_CARD_LEVEL)]
     public int level;
     [TextArea(1, 1)]
-    public string CardName;
+    public string cardName;
     public Sprite image;
     [Space(8)]
 
     [TextArea(2,3)]
-    public string brief;
+    public string description;
 
     #region PROPERTIES
     [Header("Properties")]
@@ -54,6 +54,7 @@ public class CardAsset : ScriptableObject
     public int abundace;
     [Range(MIN_PROP_VALUE, MAX_PROP_VALUE)]
     public int disaster;
+    #endregion
 
     [Header("Karma")]
     public int karma;
