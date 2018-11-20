@@ -5,7 +5,7 @@ public class GameHandler : MonoBehaviour {
 
     private static GameHandler instance;
 
-    [Range(1.0f,10.0f)]
+    [Range(1.0f, 20.0f)]
     [SerializeField]
     private float timeSpeed = 5.0f;
 
