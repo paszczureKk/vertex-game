@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DeckHandler : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class DeckHandler : MonoBehaviour
     //lista wszystkich kart
     private List<CardAsset> cardData = new List<CardAsset>();
     //lista kart na rece
-    private List<GameObject> cards = new List<GameObject>();
+    private List<Card> cards = new List<Card>();
 
     #endregion
 
@@ -39,6 +40,59 @@ public class DeckHandler : MonoBehaviour
     private float cardWidth;
     //pozycja pierwszej karty w wypadku gdy nachodza na siebie (inaczej to spawnPoint)
     private float firstCardPointer;
+
+    #endregion
+
+    #region PUBLIC_CLASSES
+
+    public class Card : IComparable<Card>
+    {
+        private CardAsset data;
+        private GameObject cardObject;
+
+        public CardAsset Data
+        {
+            get
+            {
+                return data;
+            }
+            set
+            {
+                data = value;
+                this.CardObject.GetComponent<CardSelfManager>().Update(value);
+            }
+        }
+
+        public GameObject CardObject
+        {
+            get
+            {
+                return cardObject;
+            }
+            set
+            {
+                cardObject = value;
+            }
+        }
+
+        public Card()
+        {
+            DeckHandler dh = DeckHandler.Instance;
+            CardObject = Instantiate<GameObject>(dh.cardPrefab, dh.spawnPoint.transform.position, Quaternion.identity, dh.spawnPoint);
+            Data = dh.CardData;
+            dh.cards.Add(this);
+        }
+
+        public int CompareTo(Card other)
+        {
+            if (this.data.level == other.data.level)
+            {
+                return this.data.cardName.CompareTo(other.data.cardName);
+            }
+            else
+                return this.data.level - other.data.level;
+        }
+    }
 
     #endregion
 
@@ -80,7 +134,7 @@ public class DeckHandler : MonoBehaviour
     {
         get
         {
-            return cardData[Random.Range(0, cardData.Count)];
+            return cardData[UnityEngine.Random.Range(0, cardData.Count)];
         }
     }
 
@@ -106,13 +160,12 @@ public class DeckHandler : MonoBehaviour
 
         for (int i = 0; i < handCap; i++)
         {
-            GameObject card = Instantiate<GameObject>(cardPrefab, spawnPoint.transform.position, Quaternion.identity, spawnPoint);
-            cards.Add(card);
+            Card card = new Card();
         }
         #endregion
 
         //ustawienie parametrów funkcji Settle()
-        cardWidth = cards[0].GetComponent<RectTransform>().rect.width;
+        cardWidth = cards[0].CardObject.GetComponent<RectTransform>().rect.width;
 
         //ustawienie startowej liczby kart na ręce
         CardsCounter += handCap;
@@ -127,7 +180,7 @@ public class DeckHandler : MonoBehaviour
             float offset = (handTransform.rect.width - cardWidth - 30.0f) / (CardsCounter - 1);
             for (int i = 0; i < CardsCounter; i++)
             {
-                cards[i].transform.localPosition -= new Vector3(firstCardPointer, 0.0f, 0.0f) - new Vector3(i * offset, 0.0f, 0.0f);
+                cards[i].CardObject.transform.localPosition -= new Vector3(firstCardPointer, 0.0f, 0.0f) - new Vector3(i * offset, 0.0f, 0.0f);
             }
         }
         else
@@ -138,7 +191,7 @@ public class DeckHandler : MonoBehaviour
                 {
                     firstCardPointer = (cardWidth + 15.0f) * (CardsCounter / 2 - 0.5f);
                     float offset = cardWidth + 15.0f;
-                    cards[i].transform.localPosition -= new Vector3(firstCardPointer, 0.0f, 0.0f) - new Vector3(i * offset, 0.0f, 0.0f);
+                    cards[i].CardObject.transform.localPosition -= new Vector3(firstCardPointer, 0.0f, 0.0f) - new Vector3(i * offset, 0.0f, 0.0f);
                 }
             }
             else
@@ -147,7 +200,7 @@ public class DeckHandler : MonoBehaviour
                 {
                     firstCardPointer = (cardWidth + 15.0f) * (CardsCounter / 2);
                     float offset = cardWidth + 15.0f;
-                    cards[i].transform.localPosition -= new Vector3(firstCardPointer, 0.0f, 0.0f) - new Vector3(i * offset, 0.0f, 0.0f);
+                    cards[i].CardObject.transform.localPosition -= new Vector3(firstCardPointer, 0.0f, 0.0f) - new Vector3(i * offset, 0.0f, 0.0f);
                 }
             }
         }

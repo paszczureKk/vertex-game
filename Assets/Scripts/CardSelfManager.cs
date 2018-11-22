@@ -4,9 +4,7 @@ using UnityEngine.UI;
 public class CardSelfManager : MonoBehaviour
 {
     private DeckHandler deckHandler;
-
-    private CardAsset card;
-
+    
     private Image cardImage;
     private Text cardDescription;
     private Text cardName;
@@ -18,15 +16,12 @@ public class CardSelfManager : MonoBehaviour
         cardImage = gameObject.transform.Find("CardImage").GetComponent<Image>();
         cardDescription = gameObject.transform.Find("CardDescription").GetComponent<Text>();
         cardName = gameObject.transform.Find("CardName").GetComponent<Text>();
+    }
 
-        card = deckHandler.CardData;
-
+    public void Update(CardAsset card)
+    {
         cardImage.sprite = card.image;
         cardDescription.text = card.description;
         cardName.text = card.cardName;
-    }
-
-    private void Start()
-    {
     }
 }

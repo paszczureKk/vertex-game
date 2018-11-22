@@ -63,6 +63,7 @@
     <Compile Include="Assets\ScriptableObjects\CardAsset.cs" />
     <Compile Include="Assets\Scripts\CardSelfManager.cs" />
     <Compile Include="Assets\Scripts\DeckHandler.cs" />
+    <Compile Include="Assets\Scripts\EventHandler.cs" />
     <Compile Include="Assets\Scripts\GameHandler.cs" />
     <Compile Include="Assets\Scripts\TimeHandler.cs" />
     <Reference Include="UnityEditor.StandardEvents">
