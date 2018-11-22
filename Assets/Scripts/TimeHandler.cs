@@ -31,7 +31,7 @@ public class TimeHandler : MonoBehaviour
 
     #region PROPERTIES
 
-    public TimeHandler Instance
+    public static TimeHandler Instance
     {
         get
         {
@@ -73,7 +73,6 @@ public class TimeHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(time);
         time += timeSpeed * Time.deltaTime;
         if (time >= dayDuration)
         {
@@ -158,5 +157,7 @@ public class TimeHandler : MonoBehaviour
     {
         TimeSpeed += value;
         speedText.text = TimeSpeed.ToString();
+
+        DeckHandler.Instance.TimeChange();
     }
 }
