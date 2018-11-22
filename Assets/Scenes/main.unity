@@ -550,6 +550,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e614c4cf3f6f7c74388c508d3f402e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 1596331701779736, guid: 5ffbe66e817b6944ab7e9f73a724543d, type: 2}
+  spawnPoint: {fileID: 586016311}
+  handTransform: {fileID: 1285970020}
   handCap: 7
   deckAnimationTime: 2
 --- !u!1001 &206497723
@@ -1369,7 +1372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 148.12614, y: -21.732662}
+  m_AnchoredPosition: {x: 148.12614, y: -21.732666}
   m_SizeDelta: {x: 296.2523, y: 43.465324}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &529434915
@@ -3375,7 +3378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.031174613, y: 0.28073907}
   m_AnchorMax: {x: 0.9731415, y: 0.97}
-  m_AnchoredPosition: {x: 0, y: 0.0000026226044}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1537782570

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -76,19 +77,34 @@ public class EventHandler : MonoBehaviour
     private void Start()
     {
         timeHandler = TimeHandler.Instance;
+        StartCoroutine(Event());
     }
 
-    private void FixedUpdate()
+    public IEnumerator Event()
     {
-        if (UnityEngine.Random.Range(0, 1) < EventProbability)
+        Debug.Log("bla");
+        if (UnityEngine.Random.Range(0.0f, 1.0f) < eventProbability)
             EventOccurs();
+        else
+        {
+            yield return new WaitForSeconds(1);
+            StartCoroutine(Event());
+        }
     }
 
     private void EventOccurs()
     {
+        timeHandler.enabled = false;
+
         EventAsset _event = events[UnityEngine.Random.Range(0, events.Count)];
         eventWindow.SetActive(true);
         eventImage.sprite = _event.image;
         eventDescription.text = _event.description;
+    }
+
+    private void EventClosed()
+    {
+        timeHandler.enabled = true;
+        StartCoroutine(Event());
     }
 }

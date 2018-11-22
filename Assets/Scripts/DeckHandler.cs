@@ -11,13 +11,13 @@ public class DeckHandler : MonoBehaviour
 
     //wzorzec karty
     [SerializeField]
-    private readonly GameObject cardPrefab;
+    private GameObject cardPrefab;
     //miejsce inicjalizacji kart
     [SerializeField]
-    private readonly Transform spawnPoint;
+    private Transform spawnPoint;
     //panel reki
     [SerializeField]
-    private readonly RectTransform handTransform;
+    private RectTransform handTransform;
     //pojemnosc reki
     [SerializeField]
     private int handCap;
