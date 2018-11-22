@@ -395,6 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1596331701779736, guid: 5ffbe66e817b6944ab7e9f73a724543d, type: 2}
   spawnPoint: {fileID: 586016311}
+  handTransform: {fileID: 1285970020}
   handCap: 6
 --- !u!1001 &206497723
 Prefab:
@@ -1052,6 +1053,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224245639192850870, guid: 3431f9efc2bb23f49befc28aa363b27c,
     type: 2}
   m_PrefabInternal: {fileID: 413266684}
+--- !u!114 &413266686 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114093865506762836, guid: 3431f9efc2bb23f49befc28aa363b27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 413266684}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &437939906
 Prefab:
   m_ObjectHideFlags: 0
@@ -1792,6 +1799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calendarText: {fileID: 1781344834}
+  speedText: {fileID: 413266686}
   dayTimeSlider: {fileID: 1826149809}
 --- !u!1001 &752281435
 Prefab:
