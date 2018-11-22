@@ -1,15 +1,98 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeHandler : MonoBehaviour {
+public class TimeHandler : MonoBehaviour
+{
+    private static TimeHandler instance;
+
+    #region PRIVATE_VARS
+
+    private float dayDuration;
 
     private float time = 0f;
-    private float dayDuration = 10f;
-    private float timeSpeed;
+    private float timeSpeed = 10.0f;
+
     private int day = 1;
     private int month = 1;
-    public Text calendarText;
-    public Slider dayTimeSlider;
+    private int year = 1;
+
+    #endregion
+
+    #region EDITOR_VARS
+
+    [SerializeField]
+    private Text calendarText;
+    [SerializeField]
+    private Text speedText;
+    [SerializeField]
+    private Slider dayTimeSlider;
+
+    #endregion
+
+    #region PROPERTIES
+
+    public TimeHandler Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    public float TimeSpeed
+    {
+        get
+        {
+            return timeSpeed;
+        }
+        set
+        {
+            timeSpeed = value;
+            if (timeSpeed < 1.0f) timeSpeed = 1.0f;
+            if (timeSpeed > 20.0f) timeSpeed = 20.0f;
+        }
+    }
+
+    #endregion
+
+    private void Awake()
+    {
+        if (instance != null)
+            Destroy(gameObject);
+        else
+            instance = this;
+
+        dayDuration = gameObject.GetComponentInChildren<Slider>().maxValue;
+    }
+
+    private void Start()
+    {
+        calendarText.text = day + monthToString(month);
+        speedText.text = TimeSpeed.ToString();
+    }
+
+    private void FixedUpdate()
+    {
+        Debug.Log(time);
+        time += timeSpeed * Time.deltaTime;
+        if (time >= dayDuration)
+        {
+            ++day;
+            time = 0;
+            calendarText.text = day + monthToString(month);
+        }
+        if (day >= monthDayCount(month))
+        {
+            ++month;
+            day = 1;
+        }
+        if (month >= 12)
+        {
+            month = 1;
+            year = (year + 1) % 4;
+        }
+        dayTimeSlider.value = time;
+    }
 
     private string monthToString(int n)
     {
@@ -62,34 +145,18 @@ public class TimeHandler : MonoBehaviour {
             case 11:
                 return 30;
             case 2:
-                return 29;
+                if (year == 0)
+                    return 29;
+                else
+                    return 28;
             default:
                 return -1;
         }
     }
 
-    private void Start()
+    public void TimeChange(int value)
     {
-        timeSpeed = GameHandler.Instance.TimeSpeed;
-        calendarText.text = day + monthToString(month);
-    }
-
-    private void Update()
-    {
-        time += 3 * timeSpeed * Time.deltaTime;
-        if (time >= dayDuration)
-        {
-            ++day;
-            time = 0;
-            calendarText.text = day + monthToString(month);
-        }
-        if (day >= monthDayCount(month))
-        {
-            ++month;
-            day = 1;
-        }
-        if (month >= 12)
-            month = 1;
-        dayTimeSlider.value = time;
+        TimeSpeed += value;
+        speedText.text = TimeSpeed.ToString();
     }
 }
