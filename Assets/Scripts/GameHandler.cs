@@ -5,6 +5,10 @@ public class GameHandler : MonoBehaviour {
 
     private static GameHandler instance;
 
+    #region PRIVATE_VARS
+
+    #endregion
+
     #region PROPERTIES
 
     public static GameHandler Instance

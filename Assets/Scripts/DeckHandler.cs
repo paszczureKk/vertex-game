@@ -11,19 +11,19 @@ public class DeckHandler : MonoBehaviour
 
     //wzorzec karty
     [SerializeField]
-    private GameObject cardPrefab;
+    private readonly GameObject cardPrefab;
     //miejsce inicjalizacji kart
     [SerializeField]
-    private Transform spawnPoint;
+    private readonly Transform spawnPoint;
     //panel reki
     [SerializeField]
-    private RectTransform handTransform;
+    private readonly RectTransform handTransform;
     //pojemnosc reki
     [SerializeField]
     private int handCap;
-    [Range(0.1f,0.5f)]
+    [Range(1.0f,3.0f)]
     [SerializeField]
-    private float deckSpeed = 0.3f;
+    private float deckAnimationTime = 2.0f;
 
     #endregion
 
@@ -45,6 +45,8 @@ public class DeckHandler : MonoBehaviour
     private float cardWidth;
     //szerokosc pojedynczej karty
     private float cardHeight;
+    //predkosc animacji talii
+    private float speed;
 
     private TimeHandler timeHandler;
 
@@ -86,7 +88,7 @@ public class DeckHandler : MonoBehaviour
         {
             DeckHandler dh = DeckHandler.Instance;
             CardObject = Instantiate<GameObject>(dh.cardPrefab, dh.spawnPoint.transform.position, Quaternion.identity, dh.spawnPoint);
-            CardObject.GetComponent<CardSelfManager>().Speed = dh.DeckSpeed;
+            CardObject.GetComponent<CardSelfManager>().Speed = dh.speed;
             Data = dh.CardData;
             dh.cards.Add(this);
         }
@@ -122,15 +124,15 @@ public class DeckHandler : MonoBehaviour
         }
     }
 
-    public float DeckSpeed
+    public float DeckAnimationTime
     {
         get
         {
-            return deckSpeed;
+            return deckAnimationTime;
         }
         set
         {
-            deckSpeed = value;
+            deckAnimationTime = value;
         }
     }
 
@@ -157,6 +159,7 @@ public class DeckHandler : MonoBehaviour
         }
         set
         {
+            //biezaca roznica (daje w wyniku liczbe kart dodanych lub usunietych)
             int diff = value - cardsCounter;
 
             if (value > 0)
@@ -216,19 +219,19 @@ public class DeckHandler : MonoBehaviour
     private void Start()
     {
         timeHandler = TimeHandler.Instance;
-        DeckSpeed = (int)(DeckSpeed * timeHandler.TimeSpeed);
+        speed = DeckAnimationTime * timeHandler.TimeSpeed;
         
         foreach (Card card in cards)
-            card.CardObject.GetComponent<CardSelfManager>().Speed = DeckSpeed;
+            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
     }
 
     public void TimeChange()
     {
-        DeckSpeed = DeckSpeed / timeHandler.TimeSpeed;
+        speed = DeckAnimationTime * timeHandler.TimeSpeed;
         foreach (Card card in cards)
-            card.CardObject.GetComponent<CardSelfManager>().Speed = DeckSpeed;
+            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
         foreach (Card card in discardPile)
-            card.CardObject.GetComponent<CardSelfManager>().Speed = DeckSpeed;
+            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
     }
 
     private Vector3 GetCardPosition(int index)
@@ -295,12 +298,25 @@ public class DeckHandler : MonoBehaviour
 
     public void Use(int index)
     {
-        Card card = cards[index];
-        cards.RemoveAt(index);
-        discardPile.Add(card);
-        card.CardObject.transform.localPosition = spawnPoint.position;
-        card.CardObject.SetActive(false);
+    }
 
-        CardsCounter--;
+    public void Discard(int count = 1, int index = -1)
+    {
+        bool random = (index < 0) ? true : false;
+
+        for (int i = 0; i < count; i++)
+        {
+            if (random)
+                index = UnityEngine.Random.Range(0, cards.Count);
+
+            Card card = cards[index];
+            cards.RemoveAt(index);
+            discardPile.Add(card);
+            card.CardObject.GetComponent<CardSelfManager>().Poof();
+            card.CardObject.transform.localPosition = spawnPoint.position;
+            card.CardObject.SetActive(false);
+        }
+
+        CardsCounter -= count;
     }
 }

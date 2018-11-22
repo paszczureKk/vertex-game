@@ -10,7 +10,7 @@ public class TimeHandler : MonoBehaviour
     private float dayDuration;
 
     private float time = 0f;
-    private float timeSpeed = 10.0f;
+    private float timeSpeed = 3.0f;
 
     private int day = 1;
     private int month = 1;
@@ -49,7 +49,7 @@ public class TimeHandler : MonoBehaviour
         {
             timeSpeed = value;
             if (timeSpeed < 1.0f) timeSpeed = 1.0f;
-            if (timeSpeed > 20.0f) timeSpeed = 20.0f;
+            if (timeSpeed > 5.0f) timeSpeed = 5.0f;
         }
     }
 

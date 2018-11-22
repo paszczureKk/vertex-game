@@ -79,7 +79,7 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         Poof();
     }
 
-    private void Poof()
+    public void Poof()
     {
         //efekt pojawienia sie i znikniecia karty
     }
@@ -101,6 +101,6 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerClick(PointerEventData eventData)
     {
         Poof();
-        DeckHandler.Instance.Use(Index);
+        DeckHandler.Instance.Discard(index: Index);
     }
 }

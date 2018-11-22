@@ -8,20 +8,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 855a1cebd6ae5a848bc124f706ec4eb1, type: 3}
-  m_Name: Card 1
+  m_Script: {fileID: 11500000, guid: 3a1a6160ef5f04b44b7e1093b5ef0cdd, type: 3}
+  m_Name: Event
   m_EditorClassIdentifier: 
-  level: 0
-  cardName: 
+  level: 1
+  eventName: Event1
   image: {fileID: 21300000, guid: c37ab898d5da5a54686fae5072217226, type: 3}
-  description: 
-  fire: 0
+  description: Super trudny Event
+  fire: 3
   water: 0
-  power: 0
+  power: 3
   spirit: 0
-  air: 0
+  air: 3
   earth: 0
-  curse: 0
+  curse: 3
   fortune: 0
   life: 0
   death: 0
@@ -31,4 +31,3 @@ MonoBehaviour:
   darkness: 0
   abundace: 0
   disaster: 0
-  karma: 0
