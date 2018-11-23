@@ -231,7 +231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1596331701779736, guid: 5ffbe66e817b6944ab7e9f73a724543d, type: 2}
   spawnPoint: {fileID: 586016311}
-  handCap: 6
+  handTransform: {fileID: 1285970020}
+  handCap: 4
 --- !u!1001 &206497723
 Prefab:
   m_ObjectHideFlags: 0
