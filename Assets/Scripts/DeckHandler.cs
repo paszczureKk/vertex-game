@@ -48,8 +48,6 @@ public class DeckHandler : MonoBehaviour
     //predkosc animacji talii
     private float speed;
 
-    private TimeHandler timeHandler;
-
     #endregion
 
     #region PUBLIC_CLASSES
@@ -192,6 +190,8 @@ public class DeckHandler : MonoBehaviour
 
     #endregion
 
+    #region AWAKE/START/UPDATE
+
     private void Awake()
     {
         if (instance != null)
@@ -212,28 +212,23 @@ public class DeckHandler : MonoBehaviour
         cardWidth = cards[0].CardObject.GetComponent<RectTransform>().rect.width;
         cardHeight = cards[0].CardObject.GetComponent<RectTransform>().rect.width;
 
-    //ustawienie startowej liczby kart na ręce
-    CardsCounter += handCap;
+        //ustawienie startowej liczby kart na ręce
+        CardsCounter += handCap;
     }
 
     private void Start()
     {
-        timeHandler = TimeHandler.Instance;
-        speed = DeckAnimationTime * timeHandler.TimeSpeed;
-        
+        speed = DeckAnimationTime * TimeHandler.Instance.TimeSpeed;
+
         foreach (Card card in cards)
             card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
     }
 
-    public void TimeChange()
-    {
-        speed = DeckAnimationTime * timeHandler.TimeSpeed;
-        foreach (Card card in cards)
-            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
-        foreach (Card card in discardPile)
-            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
-    }
+    #endregion
 
+    #region PRIVATE_FUNCTIONS
+
+    //zwraca pozycje na ktorej powinna byc dana karta w obecnym ustawieniu
     private Vector3 GetCardPosition(int index)
     {
         float offset;
@@ -276,10 +271,20 @@ public class DeckHandler : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region PUBLIC_FUNCTIONS
+
+    //zwraca dane karty na rece o konkretnym indeksie
+    public CardAsset GetCard(int index)
+    {
+        return cards[index].Data;
+    }
+
     //dobiera wskazaną liczbę kart
     public void Draw(int count)
     {
-        if(HandCap - CardsCounter > 0)
+        if (HandCap - CardsCounter > 0)
         {
             int repeat = (HandCap - CardsCounter < count) ? HandCap - CardsCounter : count;
 
@@ -312,11 +317,23 @@ public class DeckHandler : MonoBehaviour
             Card card = cards[index];
             cards.RemoveAt(index);
             discardPile.Add(card);
-            card.CardObject.GetComponent<CardSelfManager>().Poof();
+            //efekt uzycia karty
             card.CardObject.transform.localPosition = spawnPoint.position;
             card.CardObject.SetActive(false);
         }
 
         CardsCounter -= count;
     }
+
+    public void TimeChange()
+    {
+        speed = DeckAnimationTime * TimeHandler.Instance.TimeSpeed;
+        foreach (Card card in cards)
+            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
+        foreach (Card card in discardPile)
+            card.CardObject.GetComponent<CardSelfManager>().Speed = speed;
+    }
+
+    #endregion
+
 }

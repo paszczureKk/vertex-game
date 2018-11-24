@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class GameHandler : MonoBehaviour {
 
@@ -7,9 +8,19 @@ public class GameHandler : MonoBehaviour {
 
     #region PRIVATE_VARS
 
-    #endregion
+    private Dictionary<ElementsTypes.ElementType, Sprite> elementsImages;
 
+    #endregion
+    
     #region PROPERTIES
+
+    public Dictionary<ElementsTypes.ElementType, Sprite> ElementsImages
+    {
+        get
+        {
+            return elementsImages;
+        }
+    }
 
     public static GameHandler Instance
     {
@@ -21,11 +32,21 @@ public class GameHandler : MonoBehaviour {
 
     #endregion
 
+    #region AWAKE/START/UPDATE
+
     private void Awake()
     {
         if (instance != null)
             Destroy(gameObject);
         else
             instance = this;
+
+        elementsImages = new Dictionary<ElementsTypes.ElementType, Sprite>();
+
+        foreach (ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
+            elementsImages.Add(type, Resources.Load<Sprite>("ElementsImages/" + type.ToString()));
     }
+
+    #endregion
+    
 }

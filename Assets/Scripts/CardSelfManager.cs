@@ -11,16 +11,21 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Text cardDescription;
     private Text cardName;
 
+    //stan karty - wybrana/niewybrana
+    private bool cardChecked = false;
+
     #endregion
 
     #region PROPERTIES
 
+    //predkosc animacji
     public float Speed
     {
         get;
         set;
     }
 
+    //obecny index karty na rece
     public int Index
     {
         get;
@@ -29,6 +34,8 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     #endregion
 
+    #region AWAKE/START/UPDATE
+
     private void Awake()
     {
         cardImage = gameObject.transform.Find("CardImage").GetComponent<Image>();
@@ -36,18 +43,79 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         cardName = gameObject.transform.Find("CardName").GetComponent<Text>();
     }
 
-    public void UpdateCard(CardAsset card)
+    #endregion
+
+    #region PRIVATE_FUNCTIONS
+
+    //zmienia stan poswiaty karty - prawda wlacza | falsz wylacza
+    private void HaloChange(bool turnFlag)
     {
-        cardImage.sprite = card.image;
-        cardDescription.text = card.description;
-        cardName.text = card.cardName;
+        if (turnFlag == true)
+        {
+            //zapal
+        }
+        else
+        {
+            //zgas
+        }
     }
 
+    #endregion
+
+    #region PUBLIC_FUNCTIONS
+
+    //reakcja na najechanie kursorem na obiekt
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (cardChecked == false)
+        {
+            this.transform.SetAsLastSibling();
+            Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
+            StartCoroutine(MouseHover(destination));
+        }
+    }
+
+    //reakcja na zabranie kursora z obiektu
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (cardChecked == false)
+        {
+            this.transform.SetSiblingIndex(Index);
+            Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
+            StartCoroutine(MouseHover(destination));
+        }
+    }
+
+    //reakcja na klikniecie lpm na obiekt
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (EventHandler.Instance.EventLock == true)
+        {
+            if (cardChecked == false)
+            {
+                this.transform.SetSiblingIndex(Index);
+                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
+                StartCoroutine(MouseHover(destination));
+                cardChecked = true;
+                HaloChange(true);
+            }
+            else
+            {
+                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
+                StartCoroutine(MouseHover(destination));
+                cardChecked = false;
+                HaloChange(false);
+            }
+            EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index));
+        }
+    }
+
+    //przesuwa karte w czasie wzdluz osi poziomej
     public IEnumerator Move(Vector3 destination)
     {
         float x = gameObject.transform.localPosition.x;
 
-        for(float time = .0f; time<1; time+=Time.deltaTime * Speed)
+        for (float time = .0f; time < 1; time += Time.deltaTime * Speed)
         {
             float y = gameObject.transform.localPosition.y;
             gameObject.transform.localPosition = Vector3.Lerp(new Vector3(x, y, 0.0f), new Vector3(destination.x, y, 0.0f), time);
@@ -57,6 +125,7 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         gameObject.transform.localPosition = new Vector3(destination.x, gameObject.transform.localPosition.y, 0.0f);
     }
 
+    //przesuwa karte w czasie wzdluz osi pionowej
     public IEnumerator MouseHover(Vector3 destination)
     {
         StopCoroutine("MouseHover");
@@ -73,34 +142,20 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, destination.y, 0.0f);
     }
 
+    //przesuwa karte natychmiast we wskazane miejsce
     public void InstantMove(Vector3 destination)
     {
         gameObject.transform.localPosition = destination;
-        Poof();
     }
 
-    public void Poof()
+    //aktualizuje wyglad karty
+    public void UpdateCard(CardAsset card)
     {
-        //efekt pojawienia sie i znikniecia karty
+        cardImage.sprite = card.image;
+        cardDescription.text = card.description;
+        cardName.text = card.cardName;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        this.transform.SetAsLastSibling();
-        Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
-        StartCoroutine(MouseHover(destination));
-    }
+    #endregion
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        this.transform.SetAsLastSibling();
-        Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
-        StartCoroutine(MouseHover(destination));
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Poof();
-        DeckHandler.Instance.Discard(index: Index);
-    }
 }

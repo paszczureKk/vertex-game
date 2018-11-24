@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class BaseAsset : ScriptableObject
 {
@@ -8,20 +9,10 @@ public class BaseAsset : ScriptableObject
     
     public string description;
 
-    public int fire;
-    public int water;
-    public int air;
-    public int earth;
-    public int power;
-    public int spirit;
-    public int curse;
-    public int fortune;
-    public int life;
-    public int death;
-    public int war;
-    public int peace;
-    public int light;
-    public int darkness;
-    public int abundace;
-    public int disaster;
+    public int[] properties;
+
+    public BaseAsset()
+    {
+        properties = new int[Enum.GetValues(typeof(ElementsTypes.ElementType)).Length];
+    }
 }

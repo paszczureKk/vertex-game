@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\ScriptableObjects\BaseAsset.cs" />
     <Compile Include="Assets\ScriptableObjects\CardAsset.cs" />
+    <Compile Include="Assets\ScriptableObjects\ElementsTypes.cs" />
     <Compile Include="Assets\ScriptableObjects\EventAsset.cs" />
     <Compile Include="Assets\Scripts\CardSelfManager.cs" />
     <Compile Include="Assets\Scripts\DeckHandler.cs" />

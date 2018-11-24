@@ -55,6 +55,8 @@ public class TimeHandler : MonoBehaviour
 
     #endregion
 
+    #region AWAKE/START/UPDATE
+
     private void Awake()
     {
         if (instance != null)
@@ -92,6 +94,10 @@ public class TimeHandler : MonoBehaviour
         }
         dayTimeSlider.value = time;
     }
+
+    #endregion
+
+    #region PRIVATE_FUNCTIONS
 
     private string monthToString(int n)
     {
@@ -153,6 +159,10 @@ public class TimeHandler : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region PUBLIC_FUNCTIONS
+
     public void TimeChange(int value)
     {
         TimeSpeed += value;
@@ -160,4 +170,7 @@ public class TimeHandler : MonoBehaviour
 
         DeckHandler.Instance.TimeChange();
     }
+
+    #endregion
+
 }
