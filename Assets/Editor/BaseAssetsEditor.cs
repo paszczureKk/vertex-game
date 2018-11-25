@@ -1,9 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System;
-using System.Reflection;
 
-[CustomEditor(typeof(BaseAsset), true)]
+/*[CustomEditor(typeof(BaseAsset), true)]
 public class BaseAssetsEditor : Editor
 {
     #region CONSTS
@@ -79,3 +78,4 @@ public class BaseAssetsEditor : Editor
             EditorGUILayout.HelpBox("Number of properties can not exceed object's level!", MessageType.Warning);
     }
 }
+*/

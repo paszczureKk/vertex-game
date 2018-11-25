@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-[CustomEditor(typeof(CardAsset), true)]
+/*[CustomEditor(typeof(CardAsset), true)]
 public class CardAssetsEditor : BaseAssetsEditor
 {
 
@@ -23,4 +23,4 @@ public class CardAssetsEditor : BaseAssetsEditor
             objectCardAsset.karma = EditorGUILayout.IntField(objectCardAsset.karma);
         EditorGUILayout.EndHorizontal();
     }
-}
+}*/
