@@ -67,22 +67,28 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     //reakcja na najechanie kursorem na obiekt
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (cardChecked == false)
+        if(EventHandler.Instance.EventLock == true)
         {
-            this.transform.SetAsLastSibling();
-            Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
-            StartCoroutine(MouseHover(destination));
+            if (cardChecked == false)
+            {
+                this.transform.SetAsLastSibling();
+                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
+                StartCoroutine(MouseHover(destination));
+            }
         }
     }
 
     //reakcja na zabranie kursora z obiektu
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (cardChecked == false)
+        if(EventHandler.Instance.EventLock == true)
         {
-            this.transform.SetSiblingIndex(Index);
-            Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
-            StartCoroutine(MouseHover(destination));
+            if (cardChecked == false)
+            {
+                this.transform.SetSiblingIndex(Index);
+                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
+                StartCoroutine(MouseHover(destination));
+            }
         }
     }
 
@@ -94,19 +100,20 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
             if (cardChecked == false)
             {
                 this.transform.SetSiblingIndex(Index);
-                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
+                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
                 StartCoroutine(MouseHover(destination));
                 cardChecked = true;
                 HaloChange(true);
+                EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), true);
             }
             else
             {
-                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
+                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
                 StartCoroutine(MouseHover(destination));
                 cardChecked = false;
                 HaloChange(false);
+                EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), false);
             }
-            EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index));
         }
     }
 

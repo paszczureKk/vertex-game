@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\DeckHandler.cs" />
     <Compile Include="Assets\Scripts\EventHandler.cs" />
     <Compile Include="Assets\Scripts\GameHandler.cs" />
+    <Compile Include="Assets\Scripts\MessageHandler.cs" />
     <Compile Include="Assets\Scripts\TimeHandler.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/vertex-game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

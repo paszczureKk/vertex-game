@@ -31,8 +31,6 @@ public class EventHandler : MonoBehaviour
     [SerializeField]
     private Button eventButton;
     [SerializeField]
-    private List<GameObject> eventRequirements;
-    [SerializeField]
     private List<Image> eventRequirementsImages;
     [SerializeField]
     private List<Text> eventRequirementsDescriptions;
@@ -111,9 +109,11 @@ public class EventHandler : MonoBehaviour
         {
             if (elementsValues[type] > 0)
             {
+                eventRequirementsImages[index].enabled = true;
+                eventRequirementsDescriptions[index].enabled = true;
+
                 eventRequirementsImages[index].sprite = GameHandler.Instance.ElementsImages[type];
                 eventRequirementsDescriptions[index].text = elementsValues[type].ToString();
-                eventRequirements[index].SetActive(true);
 
                 index++;
             }
@@ -122,12 +122,18 @@ public class EventHandler : MonoBehaviour
 
     private void PropertiesReset()
     {
-        foreach (GameObject property in eventRequirements)
-            property.SetActive(false);
+        foreach (Image image in eventRequirementsImages)
+            image.enabled = false;
+        foreach (Text text in eventRequirementsDescriptions)
+            text.enabled = false;
     }
 
     private void EventClosed()
     {
+        eventWindow.SetActive(false);
+
+        eventLock = false;
+
         TimeHandler.Instance.enabled = true;
         StartCoroutine(Event());
     }
@@ -152,6 +158,7 @@ public class EventHandler : MonoBehaviour
         TimeHandler.Instance.enabled = false;
 
         elementsValues.Clear();
+        PropertiesReset();
 
         EventAsset _event = events[UnityEngine.Random.Range(0, events.Count)];
         eventImage.sprite = _event.image;
@@ -164,10 +171,13 @@ public class EventHandler : MonoBehaviour
             int value = _event.properties[(int)(type)];
             if (value != 0)
             {
+                eventRequirementsImages[index].enabled = true;
+                eventRequirementsDescriptions[index].enabled = true;
+
                 elementsValues.Add(type, value);
+
                 eventRequirementsImages[index].sprite = GameHandler.Instance.ElementsImages[type];
                 eventRequirementsDescriptions[index].text = value.ToString();
-                eventRequirements[index].SetActive(true);
 
                 index++;
             }
@@ -177,13 +187,18 @@ public class EventHandler : MonoBehaviour
         eventLock = true;
     }
 
-    public bool EventUpdate(CardAsset card)
+    public bool EventUpdate(CardAsset card, bool addition)
     {
         bool flag = false;
 
-        foreach (ElementsTypes.ElementType type in elementsValues.Keys)
+        List<ElementsTypes.ElementType> keys = new List<ElementsTypes.ElementType>(elementsValues.Keys);
+        foreach (ElementsTypes.ElementType type in keys)
         {
-            elementsValues[type] -= card.properties[(int)(type)];
+            if (addition == true)
+                elementsValues[type] -= card.properties[(int)(type)];
+            else
+                elementsValues[type] += card.properties[(int)(type)];
+
             flag = true;
         }
 
@@ -195,11 +210,21 @@ public class EventHandler : MonoBehaviour
 
     public void EventCheck()
     {
-        eventLock = false;
+        bool flag = false;
 
-        // do zrobienia check
+        foreach(ElementsTypes.ElementType type in elementsValues.Keys)
+        {
+            if (elementsValues[type] > 0)
+                flag = true;
+        }
 
-        EventClosed();
+        if (flag)
+            MessageHandler.Instance.ShowWindow(MessageHandler.CustomMessageTypes.yesno,
+                "Event not completed!",
+                "Event is not fulfilled yet. Do You wish to continue?",
+                EventClosed);
+        else
+            EventClosed();
     }
 
     #endregion
