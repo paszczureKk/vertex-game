@@ -15,7 +15,7 @@ public class BaseAssetsEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        var objectBaseAsset = (BaseAsset)target;
+        BaseAsset objectBaseAsset = (BaseAsset)target;
 
         SerializedObject serializedBaseAsset = new SerializedObject(objectBaseAsset);
 
@@ -29,21 +29,21 @@ public class BaseAssetsEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Level:");
-            objectBaseAsset.level = EditorGUILayout.IntSlider(objectBaseAsset.level, 1, MAX_LEVEL);
+            serializedBaseAsset.FindProperty("level").intValue = EditorGUILayout.IntSlider(objectBaseAsset.level, 1, MAX_LEVEL);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Name:");
-            objectBaseAsset.cardName = EditorGUILayout.TextField(objectBaseAsset.cardName);
+            serializedBaseAsset.FindProperty("cardName").stringValue = EditorGUILayout.TextField(objectBaseAsset.cardName);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Image:");
-            objectBaseAsset.image = (Sprite)EditorGUILayout.ObjectField(objectBaseAsset.image, typeof(Sprite), false);
+            serializedBaseAsset.FindProperty("image").objectReferenceValue = (Sprite)EditorGUILayout.ObjectField(objectBaseAsset.image, typeof(Sprite), false);
         EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.LabelField("Description:");
-            objectBaseAsset.description = EditorGUILayout.TextArea(objectBaseAsset.description, GUILayout.Height(100));
+            serializedBaseAsset.FindProperty("description").stringValue = EditorGUILayout.TextArea(objectBaseAsset.description, GUILayout.Height(100));
 
         #endregion
         
@@ -74,7 +74,6 @@ public class BaseAssetsEditor : Editor
 
                     SerializedProperty serializedProperty = serializedBaseAsset.FindProperty(property.ToString());
                     serializedProperty.intValue = EditorGUILayout.IntSlider(serializedProperty.intValue, MIN_PROP_VALUE, MAX_PROP_VALUE);
-                    serializedBaseAsset.ApplyModifiedProperties();
 
                 EditorGUILayout.EndHorizontal();
             EditorGUI.EndDisabledGroup();
@@ -84,7 +83,7 @@ public class BaseAssetsEditor : Editor
 
         if (triggeredCount > objectBaseAsset.level)
             EditorGUILayout.HelpBox("Number of properties can not exceed object's level!", MessageType.Warning);
-
-        PrefabUtility.RecordPrefabInstancePropertyModifications(objectBaseAsset);
+        
+        serializedBaseAsset.ApplyModifiedProperties();
     }
 }

@@ -9,7 +9,9 @@ public class CardAssetsEditor : BaseAssetsEditor
     {
         base.OnInspectorGUI();
 
-        var objectCardAsset = (CardAsset)target;
+        CardAsset objectCardAsset = (CardAsset)target;
+
+        SerializedObject serializedCardAsset = new SerializedObject(objectCardAsset);
 
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -21,7 +23,7 @@ public class CardAssetsEditor : BaseAssetsEditor
 
         EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Karma:");
-            objectCardAsset.karma = EditorGUILayout.IntField(objectCardAsset.karma);
+            serializedCardAsset.FindProperty("karma").intValue = EditorGUILayout.IntField(objectCardAsset.karma);
         EditorGUILayout.EndHorizontal();
     }
 }
