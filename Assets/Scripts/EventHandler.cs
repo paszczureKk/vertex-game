@@ -166,9 +166,9 @@ public class EventHandler : MonoBehaviour
 
         int index = 0;
 
-       /* foreach (ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
+       foreach (ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
         {
-            //int value = _event.properties[(int)(type)];
+            int value = (int)_event.GetType().GetProperty(type.ToString()).GetValue(_event);
             if (value != 0)
             {
                 eventRequirementsImages[index].enabled = true;
@@ -181,7 +181,7 @@ public class EventHandler : MonoBehaviour
 
                 index++;
             }
-        }*/
+        }
 
         eventWindow.SetActive(true);
         eventLock = true;
@@ -194,12 +194,12 @@ public class EventHandler : MonoBehaviour
         List<ElementsTypes.ElementType> keys = new List<ElementsTypes.ElementType>(elementsValues.Keys);
         foreach (ElementsTypes.ElementType type in keys)
         {
-           /* if (addition == true)
-                //elementsValues[type] -= card.properties[(int)(type)];
+            if (addition == true)
+                elementsValues[type] -= (int)card.GetType().GetProperty(type.ToString()).GetValue(card);
             else
-                //elementsValues[type] += card.properties[(int)(type)];
+                elementsValues[type] += (int)card.GetType().GetProperty(type.ToString()).GetValue(card);
 
-            flag = true;*/
+            flag = true;
         }
 
         if (flag)

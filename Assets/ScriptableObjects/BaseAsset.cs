@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System;
 
+[System.Serializable]
 public class BaseAsset : ScriptableObject
 {
     public int level;

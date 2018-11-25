@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 
+
 [CustomEditor(typeof(CardAsset), true)]
 public class CardAssetsEditor : BaseAssetsEditor
 {

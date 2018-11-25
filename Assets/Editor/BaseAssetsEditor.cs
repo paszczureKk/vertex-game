@@ -17,6 +17,10 @@ public class BaseAssetsEditor : Editor
     {
         var objectBaseAsset = (BaseAsset)target;
 
+        SerializedObject serializedBaseAsset = new SerializedObject(objectBaseAsset);
+
+        EditorGUILayout.HelpBox("Don't forget to save [ctrl+s] changes!", MessageType.Info);
+
         #region MAIN
 
         EditorGUILayout.LabelField("Main", EditorStyles.boldLabel);
@@ -65,9 +69,13 @@ public class BaseAssetsEditor : Editor
             EditorGUI.BeginDisabledGroup(((int)objectBaseAsset.GetType().GetField(property.ToString()).GetValue(objectBaseAsset) == 0)
                                             && (objectBaseAsset.level <= triggeredCount));
                 EditorGUILayout.BeginHorizontal();
+
                     EditorGUILayout.LabelField(property.ToString() + ":");
-                    objectBaseAsset.GetType().GetField(property.ToString()).SetValue(objectBaseAsset,
-                        EditorGUILayout.IntSlider((int)objectBaseAsset.GetType().GetField(property.ToString()).GetValue(objectBaseAsset), MIN_PROP_VALUE, MAX_PROP_VALUE));
+
+                    SerializedProperty serializedProperty = serializedBaseAsset.FindProperty(property.ToString());
+                    serializedProperty.intValue = EditorGUILayout.IntSlider(serializedProperty.intValue, MIN_PROP_VALUE, MAX_PROP_VALUE);
+                    serializedBaseAsset.ApplyModifiedProperties();
+
                 EditorGUILayout.EndHorizontal();
             EditorGUI.EndDisabledGroup();
         }
@@ -76,5 +84,7 @@ public class BaseAssetsEditor : Editor
 
         if (triggeredCount > objectBaseAsset.level)
             EditorGUILayout.HelpBox("Number of properties can not exceed object's level!", MessageType.Warning);
+
+        PrefabUtility.RecordPrefabInstancePropertyModifications(objectBaseAsset);
     }
 }

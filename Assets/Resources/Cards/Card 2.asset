@@ -11,12 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855a1cebd6ae5a848bc124f706ec4eb1, type: 3}
   m_Name: Card 2
   m_EditorClassIdentifier: 
-  level: 1
+  level: 2
   cardName: 
   image: {fileID: 21300000, guid: 939d5f79ffb85a543ae2e226369a9782, type: 3}
   description: 
   Fire: 2
-  Water: 1
+  Water: 5
   Air: 0
   Earth: 0
   Power: 0
