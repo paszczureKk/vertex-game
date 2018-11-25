@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System;
+using System.Reflection;
 
 [CustomEditor(typeof(BaseAsset), true)]
 public class BaseAssetsEditor : Editor
@@ -54,19 +55,20 @@ public class BaseAssetsEditor : Editor
         EditorGUILayout.Space();
 
         triggeredCount = 0;
-        foreach(int value in objectBaseAsset.properties)
+        foreach(ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
         {
-            if (value != 0)
+            if ((int)objectBaseAsset.GetType().GetField(type.ToString()).GetValue(objectBaseAsset) != 0)
                 triggeredCount++;
         }
 
         foreach (ElementsTypes.ElementType property in Enum.GetValues(typeof(ElementsTypes.ElementType)))
         {
-            EditorGUI.BeginDisabledGroup((objectBaseAsset.properties[(int)(property)] == 0) && (objectBaseAsset.level <= triggeredCount));
+            EditorGUI.BeginDisabledGroup(((int)objectBaseAsset.GetType().GetField(property.ToString()).GetValue(objectBaseAsset) == 0)
+                                            && (objectBaseAsset.level <= triggeredCount));
                 EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField(property.ToString() + ":");
-                    objectBaseAsset.properties[(int)(property)] = EditorGUILayout.IntSlider(objectBaseAsset.properties[(int)(property)],
-                                                                                            MIN_PROP_VALUE, MAX_PROP_VALUE);
+                    objectBaseAsset.GetType().GetField(property.ToString()).SetValue(objectBaseAsset,
+                        EditorGUILayout.IntSlider((int)objectBaseAsset.GetType().GetField(property.ToString()).GetValue(objectBaseAsset), MIN_PROP_VALUE, MAX_PROP_VALUE));
                 EditorGUILayout.EndHorizontal();
             EditorGUI.EndDisabledGroup();
         }

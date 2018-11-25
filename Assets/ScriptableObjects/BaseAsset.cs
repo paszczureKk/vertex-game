@@ -9,10 +9,20 @@ public class BaseAsset : ScriptableObject
     
     public string description;
 
-    public int[] properties;
-
-    public BaseAsset()
-    {
-        properties = new int[Enum.GetValues(typeof(ElementsTypes.ElementType)).Length];
-    }
+    public int Fire;
+    public int Water;
+    public int Air;
+    public int Earth;
+    public int Power;
+    public int Spirit;
+    public int Curse;
+    public int Fortune;
+    public int Life;
+    public int Death;
+    public int War;
+    public int Peace;
+    public int Light;
+    public int Darkness;
+    public int Abundance;
+    public int Disaster;
 }
