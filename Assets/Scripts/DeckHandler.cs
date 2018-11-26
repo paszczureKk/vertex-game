@@ -21,9 +21,14 @@ public class DeckHandler : MonoBehaviour
     //pojemnosc reki
     [SerializeField]
     private int handCap;
+    //predkosc animacji kart
     [Range(1.0f,3.0f)]
     [SerializeField]
     private float deckAnimationTime = 2.0f;
+    //intensywnosc animacji niezgodnosci karty
+    [SerializeField]
+    [Range(0.0f, 25.0f)]
+    private float magnitude = 15.0f;
 
     #endregion
 
@@ -57,6 +62,8 @@ public class DeckHandler : MonoBehaviour
         private CardAsset data;
         private GameObject cardObject;
 
+        #region PROPERTIES
+        
         public CardAsset Data
         {
             get
@@ -82,6 +89,24 @@ public class DeckHandler : MonoBehaviour
             }
         }
 
+        public bool Checked
+        {
+            get
+            {
+                return cardObject.GetComponent<CardSelfManager>().CardChecked;
+            }
+        }
+
+        public int Index
+        {
+            get
+            {
+                return cardObject.GetComponent<CardSelfManager>().Index;
+            }
+        }
+
+        #endregion
+
         public Card()
         {
             DeckHandler dh = DeckHandler.Instance;
@@ -105,6 +130,14 @@ public class DeckHandler : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+
+    public float Magnitude
+    {
+        get
+        {
+            return magnitude;
+        }
+    }
 
     public float CardHeight
     {
@@ -281,6 +314,18 @@ public class DeckHandler : MonoBehaviour
         return cards[index].Data;
     }
 
+    public void UseCards()
+    {
+        int iterator = 0;
+        while(iterator < cards.Count)
+        {
+            if (cards[iterator].Checked == true)
+                Discard(index: cards[iterator].Index);
+            else
+                iterator++;
+        }
+    }
+
     //dobiera wskazaną liczbę kart
     public void Draw(int count)
     {
@@ -300,11 +345,7 @@ public class DeckHandler : MonoBehaviour
             CardsCounter += repeat;
         }
     }
-
-    public void Use(int index)
-    {
-    }
-
+    
     public void Discard(int count = 1, int index = -1)
     {
         bool random = (index < 0) ? true : false;

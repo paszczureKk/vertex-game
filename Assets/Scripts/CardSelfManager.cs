@@ -12,13 +12,14 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Image cardImage;
     private Text cardDescription;
     private Text cardName;
+    private Outline cardHalo;
     private List<GameObject> properties;
 
     //stan karty - wybrana/niewybrana
     private bool cardChecked = false;
 
     #endregion
-
+    
     #region PROPERTIES
 
     //predkosc animacji
@@ -35,6 +36,14 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         set;
     }
 
+    public bool CardChecked
+    {
+        get
+        {
+            return cardChecked;
+        }
+    }
+
     #endregion
 
     #region AWAKE/START/UPDATE
@@ -46,6 +55,9 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         cardImage = gameObject.transform.Find("CardImage").GetComponent<Image>();
         cardDescription = gameObject.transform.Find("CardDescription").GetComponent<Text>();
         cardName = gameObject.transform.Find("CardName").GetComponent<Text>();
+        cardHalo = gameObject.transform.Find("CardOutline").GetComponent<Outline>();
+
+        cardHalo.enabled = false;
     }
 
     #endregion
@@ -57,12 +69,28 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (turnFlag == true)
         {
-            //zapal
+            cardHalo.enabled = true;
         }
         else
         {
-            //zgas
+            cardHalo.enabled = false;
         }
+    }
+
+    private IEnumerator Shake()
+    {
+        float magnitude = DeckHandler.Instance.Magnitude;
+        float x = gameObject.transform.localPosition.x;
+
+        for (float time = .0f; time < 1; time += Time.deltaTime * Speed)
+        {
+            float y = gameObject.transform.localPosition.y;
+            float offset = UnityEngine.Random.Range(-1.0f, 1.0f) * magnitude;
+            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(x, y, 0.0f), new Vector3(x + offset, y, 0.0f), time);
+            yield return null;
+        }
+
+        gameObject.transform.localPosition = new Vector3(x, gameObject.transform.localPosition.y, 0.0f);
     }
 
     #endregion
@@ -97,27 +125,43 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
     }
 
-    //reakcja na klikniecie lpm na obiekt
+    //reakcja na klikniecie na obiekt
     public void OnPointerClick(PointerEventData eventData)
     {
         if (EventHandler.Instance.EventLock == true)
         {
-            if (cardChecked == false)
+            //lewy przycisk myszki
+            if(eventData.button == PointerEventData.InputButton.Left)
             {
-                this.transform.SetSiblingIndex(Index);
-                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
-                StartCoroutine(MouseHover(destination));
-                cardChecked = true;
-                HaloChange(true);
-                EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), true);
+                if (cardChecked == false)
+                {
+                    if (EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), true) == true)
+                    {
+                        this.transform.SetSiblingIndex(Index);
+                        Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
+                        StartCoroutine(MouseHover(destination));
+                        cardChecked = true;
+                        HaloChange(true);
+                    }
+                    else
+                    {
+                        StartCoroutine(Shake());
+                    }
+                }
+                else
+                {
+                    Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
+                    StartCoroutine(MouseHover(destination));
+                    cardChecked = false;
+                    HaloChange(false);
+
+                    EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), false);
+                }
             }
-            else
+            //prawy przycisk myszki
+            else if(eventData.button == PointerEventData.InputButton.Right)
             {
-                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
-                StartCoroutine(MouseHover(destination));
-                cardChecked = false;
-                HaloChange(false);
-                EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), false);
+                //prawy click
             }
         }
     }
@@ -163,6 +207,8 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     //aktualizuje wyglad karty
     public void UpdateCard(CardAsset card)
     {
+        cardChecked = false;
+
         cardImage.sprite = card.image;
         cardDescription.text = card.description;
         cardName.text = card.cardName;

@@ -134,6 +134,8 @@ public class EventHandler : MonoBehaviour
 
         eventLock = false;
 
+        DeckHandler.Instance.UseCards();
+
         TimeHandler.Instance.enabled = true;
         StartCoroutine(Event());
     }
@@ -192,14 +194,26 @@ public class EventHandler : MonoBehaviour
         bool flag = false;
 
         List<ElementsTypes.ElementType> keys = new List<ElementsTypes.ElementType>(elementsValues.Keys);
+        
         foreach (ElementsTypes.ElementType type in keys)
         {
-            if (addition == true)
-                elementsValues[type] -= (int)card.GetType().GetProperty(type.ToString()).GetValue(card);
-            else
-                elementsValues[type] += (int)card.GetType().GetProperty(type.ToString()).GetValue(card);
+            if((int)card.GetType().GetField(type.ToString()).GetValue(card) != 0)
+            {
+                if (addition == true)
+                {
+                    if(elementsValues[type]>0)
+                    {
+                        elementsValues[type] -= (int)card.GetType().GetField(type.ToString()).GetValue(card);
+                        flag = true;
+                    }
+                }
+                else
+                {
+                    elementsValues[type] += (int)card.GetType().GetField(type.ToString()).GetValue(card);
+                    flag = true;
+                }
 
-            flag = true;
+            }
         }
 
         if (flag)
