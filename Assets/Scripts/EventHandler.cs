@@ -136,8 +136,21 @@ public class EventHandler : MonoBehaviour
         DeckHandler.Instance.UseCards();
 
         TimeHandler.Instance.TimeUnlock("Event");
+        
+        int points = 0;
 
-        FollowersHandler.Instance.FollowersChange(_event.reward);
+        foreach (ElementsTypes.ElementType type in elementsValues.Keys)
+        {
+            if (elementsValues[type] > 0)
+            {
+                points += elementsValues[type];
+            }
+        }
+
+        if (points > 0)
+            FollowersHandler.Instance.FollowersChange(-(points * _event.pentaly));
+        else
+            FollowersHandler.Instance.FollowersChange(_event.reward);
     }
 
     #endregion
@@ -236,10 +249,12 @@ public class EventHandler : MonoBehaviour
         }
 
         if (flag)
+        {
             MessageHandler.Instance.ShowWindow(MessageHandler.CustomMessageTypes.yesno,
                 "Event not completed!",
                 "Event is not fulfilled yet. Do You wish to continue?",
                 EventClosed);
+        }
         else
             EventClosed();
     }

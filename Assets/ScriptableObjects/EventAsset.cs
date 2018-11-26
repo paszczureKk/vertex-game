@@ -5,4 +5,5 @@
 public class EventAsset : BaseAsset
 {
     public int reward;
+    public int pentaly;
 }

@@ -16,13 +16,18 @@ public class EventAssetsEditor : BaseAssetsEditor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
-        EditorGUILayout.LabelField("Reward", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Event Clear", EditorStyles.boldLabel);
 
         EditorGUILayout.Space();
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Reward:");
         serializedEventAsset.FindProperty("reward").intValue = EditorGUILayout.IntField(objectEventAsset.reward);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Pentaly per point:");
+        serializedEventAsset.FindProperty("pentaly").intValue = EditorGUILayout.IntField(objectEventAsset.pentaly);
         EditorGUILayout.EndHorizontal();
 
         serializedEventAsset.ApplyModifiedProperties();

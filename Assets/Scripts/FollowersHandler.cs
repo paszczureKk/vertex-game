@@ -24,7 +24,7 @@ public class FollowersHandler : MonoBehaviour
 
     [Range(100, 5000)]
     [SerializeField]
-    private int followersAmount = 500;
+    private int followersAmount = 2000;
     [SerializeField]
     private Transform prayersField;
     [SerializeField]

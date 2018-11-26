@@ -3521,7 +3521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77aa71880025dfd48a8d16f098d1b134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followersAmount: 500
+  followersAmount: 2000
   prayersField: {fileID: 1426137572}
   prayer: {fileID: 1440298685291624, guid: 70aa5728f62c1e54f88a9f669fb2f5fc, type: 2}
   followersAmountText: {fileID: 302397143}

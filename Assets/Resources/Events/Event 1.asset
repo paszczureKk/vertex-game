@@ -31,4 +31,5 @@ MonoBehaviour:
   Darkness: 3
   Abundance: 0
   Disaster: 2
-  reward: 6000
+  reward: 1000
+  pentaly: 200
