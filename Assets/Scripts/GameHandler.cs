@@ -48,5 +48,14 @@ public class GameHandler : MonoBehaviour {
     }
 
     #endregion
-    
+
+    #region PUBLIC_FUNCTIONS
+
+    public void GameOver()
+    {
+
+    }
+
+    #endregion
+
 }

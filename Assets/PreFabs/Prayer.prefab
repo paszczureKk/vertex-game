@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224771766516662806}
   - component: {fileID: 222619532545583270}
   - component: {fileID: 114159556937062656}
+  - component: {fileID: 114462024253925924}
   m_Layer: 5
   m_Name: Prayer
   m_TagString: Untagged
@@ -72,6 +73,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114462024253925924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1440298685291624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6fbad0f4922fb43903463f9aeecda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114658461646487288
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class FollowersHandler : MonoBehaviour
 {
-
     private static FollowersHandler instance;
 
     #region PRIVATE_VARS
@@ -11,6 +11,8 @@ public class FollowersHandler : MonoBehaviour
     private float prayersFieldWidth;
     private float prayersFieldHeight;
     private float prayerWidth;
+
+    private float prayerProbability;
 
     private Queue<GameObject> prayers;
 
@@ -20,13 +22,16 @@ public class FollowersHandler : MonoBehaviour
 
     #region EDITOR_VARS
 
-    [Range(0.0f, 1.0f)]
+    [Range(100, 5000)]
     [SerializeField]
-    private float prayerProbability = 0.2f;
+    private int followersAmount = 500;
     [SerializeField]
     private Transform prayersField;
     [SerializeField]
     private GameObject prayer;
+
+    [SerializeField]
+    private Text followersAmountText;
 
     #endregion
 
@@ -68,6 +73,21 @@ public class FollowersHandler : MonoBehaviour
         }
     }
 
+    public int FollowersAmount
+    {
+        get
+        {
+            return followersAmount;
+        }
+        set
+        {
+            followersAmount = (value < 0) ? 0 : value;
+
+            if (followersAmount == 0)
+                GameHandler.Instance.GameOver();
+        }
+    }
+
     #endregion
 
     #region AWAKE/START/UPDATE
@@ -78,6 +98,8 @@ public class FollowersHandler : MonoBehaviour
             Destroy(gameObject);
         else
             instance = this;
+
+        prayerProbability = followersAmount / 1000.0f;
 
         prayersFieldWidth = ((RectTransform)prayersField).rect.width;
         prayersFieldHeight = ((RectTransform)prayersField).rect.height;
@@ -95,6 +117,8 @@ public class FollowersHandler : MonoBehaviour
             spawn.SetActive(false);
             prayers.Enqueue(spawn);
         }
+
+        followersAmountText.text = FollowersAmount.ToString();
     }
 
     #endregion
@@ -112,6 +136,12 @@ public class FollowersHandler : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void FollowersChange(int reward)
+    {
+        FollowersAmount += reward;
+        followersAmountText.text = FollowersAmount.ToString();
     }
 
     #endregion

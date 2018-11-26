@@ -14,6 +14,9 @@ public class EventHandler : MonoBehaviour
     //zmienna zezwalajaca na gre kartami
     bool eventLock = false;
 
+    //obecny event
+    EventAsset _event;
+
     #endregion
 
     #region EDITOR_VARS
@@ -21,6 +24,7 @@ public class EventHandler : MonoBehaviour
     [Range(0.0f, 1.0f)]
     [SerializeField]
     private float eventProbability = 0.1f;
+
     [SerializeField]
     private GameObject eventWindow;
     [SerializeField]
@@ -29,6 +33,7 @@ public class EventHandler : MonoBehaviour
     private Text eventDescription;
     [SerializeField]
     private Button eventButton;
+
     [SerializeField]
     private List<Image> eventRequirementsImages;
     [SerializeField]
@@ -131,6 +136,8 @@ public class EventHandler : MonoBehaviour
         DeckHandler.Instance.UseCards();
 
         TimeHandler.Instance.TimeUnlock("Event");
+
+        FollowersHandler.Instance.FollowersChange(_event.reward);
     }
 
     #endregion
@@ -152,7 +159,7 @@ public class EventHandler : MonoBehaviour
         elementsValues.Clear();
         PropertiesReset();
 
-        EventAsset _event = events[UnityEngine.Random.Range(0, events.Count)];
+        _event = events[UnityEngine.Random.Range(0, events.Count)];
         eventImage.sprite = _event.image;
         eventDescription.text = _event.description;
 

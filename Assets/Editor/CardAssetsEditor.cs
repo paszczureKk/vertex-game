@@ -25,5 +25,7 @@ public class CardAssetsEditor : BaseAssetsEditor
             EditorGUILayout.LabelField("Karma:");
             serializedCardAsset.FindProperty("karma").intValue = EditorGUILayout.IntField(objectCardAsset.karma);
         EditorGUILayout.EndHorizontal();
+
+        serializedCardAsset.ApplyModifiedProperties();
     }
 }
