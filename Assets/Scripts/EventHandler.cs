@@ -168,7 +168,7 @@ public class EventHandler : MonoBehaviour
 
        foreach (ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
         {
-            int value = (int)_event.GetType().GetProperty(type.ToString()).GetValue(_event);
+            int value = (int)_event.GetType().GetField(type.ToString()).GetValue(_event);
             if (value != 0)
             {
                 eventRequirementsImages[index].enabled = true;

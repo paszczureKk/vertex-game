@@ -198,7 +198,10 @@ public class DeckHandler : MonoBehaviour
             Destroy(gameObject);
         else
             instance = this;
+    }
 
+    private void Start()
+    {
         #region CARD_INIT
         cardData = new List<CardAsset>(Resources.LoadAll<CardAsset>("Cards"));
 
@@ -214,10 +217,7 @@ public class DeckHandler : MonoBehaviour
 
         //ustawienie startowej liczby kart na ręce
         CardsCounter += handCap;
-    }
 
-    private void Start()
-    {
         speed = DeckAnimationTime * TimeHandler.Instance.TimeSpeed;
 
         foreach (Card card in cards)

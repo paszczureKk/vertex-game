@@ -2,6 +2,8 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -10,6 +12,7 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Image cardImage;
     private Text cardDescription;
     private Text cardName;
+    private List<GameObject> properties;
 
     //stan karty - wybrana/niewybrana
     private bool cardChecked = false;
@@ -38,6 +41,8 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void Awake()
     {
+        properties = new List<GameObject>();
+
         cardImage = gameObject.transform.Find("CardImage").GetComponent<Image>();
         cardDescription = gameObject.transform.Find("CardDescription").GetComponent<Text>();
         cardName = gameObject.transform.Find("CardName").GetComponent<Text>();
@@ -161,6 +166,26 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         cardImage.sprite = card.image;
         cardDescription.text = card.description;
         cardName.text = card.cardName;
+
+        foreach(Transform child in gameObject.transform.Find("CardValues"))
+        {
+            properties.Add(child.gameObject);
+            child.gameObject.SetActive(false);
+        }
+
+        int propertyIndex = 0;
+        foreach (ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
+        {
+            int value = (int)card.GetType().GetField(type.ToString()).GetValue(card);
+            if (value != 0)
+            {
+                properties[propertyIndex].SetActive(true);
+                properties[propertyIndex].GetComponent<Image>().sprite = GameHandler.Instance.ElementsImages[type];
+                properties[propertyIndex].transform.Find("ValueAmount").GetComponent<Text>().text = value.ToString();
+
+                propertyIndex++;
+            }
+        }
     }
 
     #endregion
