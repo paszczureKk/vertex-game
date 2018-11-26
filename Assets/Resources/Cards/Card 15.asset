@@ -11,24 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855a1cebd6ae5a848bc124f706ec4eb1, type: 3}
   m_Name: Card 15
   m_EditorClassIdentifier: 
-  level: 0
-  CardName: 
+  level: 2
+  cardName: Card15
   image: {fileID: 21300000, guid: 2c788a97a632d1846bea189f4d925356, type: 3}
-  brief: 
-  fire: 0
-  water: 0
-  power: 0
-  spirit: 0
-  air: 0
-  earth: 0
-  curse: 0
-  fortune: 0
-  life: 0
-  death: 0
-  war: 0
-  peace: 0
-  light: 0
-  darkness: 0
-  abundace: 0
-  disaster: 0
+  description: card15 lvl2 spirit2 light3
+  Fire: 0
+  Water: 0
+  Air: 0
+  Earth: 0
+  Power: 0
+  Spirit: 2
+  Curse: 0
+  Fortune: 0
+  Life: 0
+  Death: 0
+  War: 0
+  Peace: 0
+  Light: 3
+  Darkness: 0
+  Abundance: 0
+  Disaster: 0
   karma: 0

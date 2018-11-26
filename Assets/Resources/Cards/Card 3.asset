@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: Card 3
   m_EditorClassIdentifier: 
   level: 2
-  cardName: 
+  cardName: Card3
   image: {fileID: 21300000, guid: 25e0722ee70936844960f0e2b0d14469, type: 3}
-  description: 
-  Fire: 3
-  Water: 4
-  Air: 0
+  description: card3 lvl2 water3 air2
+  Fire: 0
+  Water: 3
+  Air: 2
   Earth: 0
   Power: 0
   Spirit: 0

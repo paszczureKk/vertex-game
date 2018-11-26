@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Card 2
   m_EditorClassIdentifier: 
   level: 2
-  cardName: 
+  cardName: Card2
   image: {fileID: 21300000, guid: 939d5f79ffb85a543ae2e226369a9782, type: 3}
-  description: 
+  description: Card2 lvl2 fire2 water5
   Fire: 2
   Water: 5
   Air: 0

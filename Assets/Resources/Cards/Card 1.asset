@@ -14,7 +14,7 @@ MonoBehaviour:
   level: 1
   cardName: Card1
   image: {fileID: 21300000, guid: c37ab898d5da5a54686fae5072217226, type: 3}
-  description: 
+  description: Card1 lvl 1 fire4
   Fire: 4
   Water: 0
   Air: 0
