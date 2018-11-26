@@ -204,7 +204,7 @@ public class DeckHandler : MonoBehaviour
                 Settle();
         }
     }
-
+    
     public CardAsset CardData
     {
         get
@@ -335,11 +335,18 @@ public class DeckHandler : MonoBehaviour
 
             for (int i = 0; i < repeat; i++)
             {
-                Card card = discardPile[0];
-                discardPile.RemoveAt(0);
-                card.Data = CardData;
-                card.CardObject.SetActive(true);
-                cards.Add(card);
+                if(discardPile.Count == 0)
+                {
+                    new Card();
+                }
+                else
+                {
+                    Card card = discardPile[0];
+                    discardPile.RemoveAt(0);
+                    card.Data = CardData;
+                    card.CardObject.SetActive(true);
+                    cards.Add(card);
+                }
             }
 
             CardsCounter += repeat;

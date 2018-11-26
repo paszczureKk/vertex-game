@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageHandler : MonoBehaviour {
+public class MessageHandler : MonoBehaviour
+{
 
     private static MessageHandler instance;
 
@@ -99,6 +100,8 @@ public class MessageHandler : MonoBehaviour {
 
         foreach (GameObject window in windows)
             window.SetActive(false);
+
+        TimeHandler.Instance.TimeUnlock("Message");
     }
 
     #endregion

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
@@ -90,12 +89,7 @@ public class EventHandler : MonoBehaviour
         events = new List<EventAsset>(Resources.LoadAll<EventAsset>("Events"));
         elementsValues = new Dictionary<ElementsTypes.ElementType, int>();
     }
-
-    private void Start()
-    {
-        StartCoroutine(Event());
-    }
-
+    
     #endregion
 
     #region PRIVATE_FUNCTIONS
@@ -136,29 +130,25 @@ public class EventHandler : MonoBehaviour
 
         DeckHandler.Instance.UseCards();
 
-        TimeHandler.Instance.enabled = true;
-        StartCoroutine(Event());
+        TimeHandler.Instance.TimeUnlock("Event");
     }
 
     #endregion
 
     #region PUBLIC_FUNCTIONS
 
-    public IEnumerator Event()
+    public bool EventCall()
     {
         if (UnityEngine.Random.Range(0.0f, 1.0f) < eventProbability)
-            EventOccurs();
-        else
         {
-            yield return new WaitForSeconds(1);
-            StartCoroutine(Event());
+            EventOccurs();
+            return true;
         }
+        return false;
     }
 
-    public void EventOccurs()
+    private void EventOccurs()
     {
-        TimeHandler.Instance.enabled = false;
-
         elementsValues.Clear();
         PropertiesReset();
 
@@ -194,18 +184,24 @@ public class EventHandler : MonoBehaviour
         bool flag = false;
 
         List<ElementsTypes.ElementType> keys = new List<ElementsTypes.ElementType>(elementsValues.Keys);
-        
+
+        foreach (ElementsTypes.ElementType type in keys)
+        {
+            if ((int)card.GetType().GetField(type.ToString()).GetValue(card) != 0)
+            {
+                if (elementsValues[type] > 0)
+                    flag = true;
+            }
+        }
+
         foreach (ElementsTypes.ElementType type in keys)
         {
             if((int)card.GetType().GetField(type.ToString()).GetValue(card) != 0)
             {
                 if (addition == true)
                 {
-                    if(elementsValues[type]>0)
-                    {
+                    if(flag == true)
                         elementsValues[type] -= (int)card.GetType().GetField(type.ToString()).GetValue(card);
-                        flag = true;
-                    }
                 }
                 else
                 {

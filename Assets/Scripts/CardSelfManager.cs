@@ -42,6 +42,11 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             return cardChecked;
         }
+        set
+        {
+            cardChecked = value;
+            HaloChange(value);
+        }
     }
 
     #endregion
@@ -114,14 +119,11 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     //reakcja na zabranie kursora z obiektu
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(EventHandler.Instance.EventLock == true)
+        if (cardChecked == false)
         {
-            if (cardChecked == false)
-            {
-                this.transform.SetSiblingIndex(Index);
-                Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
-                StartCoroutine(MouseHover(destination));
-            }
+            this.transform.SetSiblingIndex(Index);
+            Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
+            StartCoroutine(MouseHover(destination));
         }
     }
 
@@ -140,8 +142,7 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
                         this.transform.SetSiblingIndex(Index);
                         Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY + DeckHandler.Instance.CardHeight / 2.0f, 0.0f);
                         StartCoroutine(MouseHover(destination));
-                        cardChecked = true;
-                        HaloChange(true);
+                        CardChecked = true;
                     }
                     else
                     {
@@ -152,8 +153,7 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 {
                     Vector3 destination = new Vector3(0.0f, DeckHandler.Instance.SpawnPointY, 0.0f);
                     StartCoroutine(MouseHover(destination));
-                    cardChecked = false;
-                    HaloChange(false);
+                    CardChecked = false;
 
                     EventHandler.Instance.EventUpdate(DeckHandler.Instance.GetCard(Index), false);
                 }
@@ -207,7 +207,7 @@ public class CardSelfManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     //aktualizuje wyglad karty
     public void UpdateCard(CardAsset card)
     {
-        cardChecked = false;
+        CardChecked = false;
 
         cardImage.sprite = card.image;
         cardDescription.text = card.description;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class TimeHandler : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class TimeHandler : MonoBehaviour
     private int month = 1;
     private int year = 1;
 
+    private bool timeLocked = false;
+    private bool isDay = true;
+
+    private Color dayColor;
+    private Color nightColor;
+
+    private List<string> calls;
+
     #endregion
 
     #region EDITOR_VARS
@@ -26,6 +35,10 @@ public class TimeHandler : MonoBehaviour
     private Text speedText;
     [SerializeField]
     private Slider dayTimeSlider;
+    [SerializeField]
+    private Image currentDayTime;
+    [SerializeField]
+    private Image nextDayTime;
 
     #endregion
 
@@ -65,6 +78,11 @@ public class TimeHandler : MonoBehaviour
             instance = this;
 
         dayDuration = gameObject.GetComponentInChildren<Slider>().maxValue;
+
+        dayColor = currentDayTime.color;
+        nightColor = nextDayTime.color;
+
+        calls = new List<string>();
     }
 
     private void Start()
@@ -75,24 +93,17 @@ public class TimeHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        time += timeSpeed * Time.deltaTime;
-        if (time >= dayDuration)
+        if(timeLocked == false)
         {
-            ++day;
-            time = 0;
-            calendarText.text = day + monthToString(month);
+            time += timeSpeed * Time.deltaTime;
+
+            if (time > dayDuration)
+            {
+                DayChange();
+            }
+
+            dayTimeSlider.value = time;
         }
-        if (day >= monthDayCount(month))
-        {
-            ++month;
-            day = 1;
-        }
-        if (month >= 12)
-        {
-            month = 1;
-            year = (year + 1) % 4;
-        }
-        dayTimeSlider.value = time;
     }
 
     #endregion
@@ -157,6 +168,61 @@ public class TimeHandler : MonoBehaviour
             default:
                 return -1;
         }
+    }
+
+    private void DayChange()
+    {
+        if(isDay == true)
+        {
+            isDay = false;
+
+            currentDayTime.color = nightColor;
+            nextDayTime.color = dayColor;
+        }
+        else
+        {
+            day++;
+
+            if (day > monthDayCount(month))
+            {
+                month++;
+                day = 1;
+
+                if(month > 12)
+                {
+                    month = 1;
+                    year = (year + 1) % 4;
+                }
+            }
+
+            isDay = true;
+            
+            calendarText.text = day + monthToString(month);
+
+            currentDayTime.color = dayColor;
+            nextDayTime.color = nightColor;
+        }
+
+        time = 0;
+
+        if (EventHandler.Instance.EventCall() == true)
+            TimeLock("Event");
+
+        FollowersHandler.Instance.PrayerCall();
+    }
+
+    private void TimeLock(string callName)
+    {
+        calls.Add(callName);
+        timeLocked = true;
+    }
+
+    public void TimeUnlock(string callName)
+    {
+        calls.Remove(callName);
+
+        if (calls.Count == 0)
+            timeLocked = false;
     }
 
     #endregion
