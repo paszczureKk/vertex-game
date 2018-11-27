@@ -8,8 +8,21 @@ public class AbilitySelfManager : MonoBehaviour
 
     [SerializeField]
     private AbilityAsset abilityData;
-    [SerializeField]
-    private AbilityUsage abilityUsage;
+
+    #endregion
+
+    #region PRIVATE_VARS
+
+    AbilityUsage abilityUsage;
+
+    #endregion
+
+    #region AWAKE/START/UPDATE
+
+    private void Awake()
+    {
+        abilityUsage = gameObject.GetComponent<AbilityUsage>();
+    }
 
     #endregion
 }

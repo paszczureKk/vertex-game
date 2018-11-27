@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Resources\AbilityUsage\Ability1Usage.cs" />
     <Compile Include="Assets\ScriptableObjects\AbilityAsset.cs" />
     <Compile Include="Assets\ScriptableObjects\AbilityAssetPrefab.cs" />
     <Compile Include="Assets\ScriptableObjects\BaseAsset.cs" />
