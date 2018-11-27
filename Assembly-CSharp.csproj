@@ -60,10 +60,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ScriptableObjects\AbilityAsset.cs" />
+    <Compile Include="Assets\ScriptableObjects\AbilityAssetPrefab.cs" />
     <Compile Include="Assets\ScriptableObjects\BaseAsset.cs" />
     <Compile Include="Assets\ScriptableObjects\CardAsset.cs" />
     <Compile Include="Assets\ScriptableObjects\ElementsTypes.cs" />
     <Compile Include="Assets\ScriptableObjects\EventAsset.cs" />
+    <Compile Include="Assets\Scripts\AbilitiesHandler.cs" />
+    <Compile Include="Assets\Scripts\AbilitySelfManager.cs" />
+    <Compile Include="Assets\Scripts\AbilityUsage.cs" />
     <Compile Include="Assets\Scripts\CardSelfManager.cs" />
     <Compile Include="Assets\Scripts\DeckHandler.cs" />
     <Compile Include="Assets\Scripts\EventHandler.cs" />

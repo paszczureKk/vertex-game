@@ -307,7 +307,7 @@ public class DeckHandler : MonoBehaviour
     #endregion
 
     #region PUBLIC_FUNCTIONS
-
+    
     //zwraca dane karty na rece o konkretnym indeksie
     public CardAsset GetCard(int index)
     {

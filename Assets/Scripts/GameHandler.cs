@@ -45,6 +45,8 @@ public class GameHandler : MonoBehaviour {
 
         foreach (ElementsTypes.ElementType type in Enum.GetValues(typeof(ElementsTypes.ElementType)))
             elementsImages.Add(type, Resources.Load<Sprite>("ElementsImages/" + type.ToString()));
+
+        LoadGame();
     }
 
     #endregion
@@ -54,6 +56,22 @@ public class GameHandler : MonoBehaviour {
     public void GameOver()
     {
 
+    }
+
+    #endregion
+
+    #region PRIVATE_FUNCTIONS
+
+    private void LoadGame()
+    {
+        if(PlayerPrefs.HasKey("game"))
+        {
+            //zaladuj gre
+        }
+        else
+        {
+            //zainicjuj gre
+        }
     }
 
     #endregion
