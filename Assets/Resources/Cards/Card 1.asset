@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855a1cebd6ae5a848bc124f706ec4eb1, type: 3}
   m_Name: Card 1
   m_EditorClassIdentifier: 
-  level: 1
+  level: 2
   cardName: Card1
   image: {fileID: 21300000, guid: c37ab898d5da5a54686fae5072217226, type: 3}
   description: Card1 lvl 1 fire4
@@ -19,7 +19,7 @@ MonoBehaviour:
   Water: 0
   Air: 0
   Earth: 0
-  Power: 0
+  Power: 4
   Spirit: 0
   Curse: 0
   Fortune: 0
