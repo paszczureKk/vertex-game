@@ -75,7 +75,6 @@
     <Compile Include="Assets\Scripts\EventHandler.cs" />
     <Compile Include="Assets\Scripts\FollowersHandler.cs" />
     <Compile Include="Assets\Scripts\GameHandler.cs" />
-    <Compile Include="Assets\Scripts\MenuHandler.cs" />
     <Compile Include="Assets\Scripts\MessageHandler.cs" />
     <Compile Include="Assets\Scripts\PrayerSelfManager.cs" />
     <Compile Include="Assets\Scripts\TimeHandler.cs" />
