@@ -8,14 +8,13 @@ public class AbilitySelfManager : MonoBehaviour
 
     [SerializeField]
     private AbilityAsset abilityData;
-    [SerializeField]
-    private Color karmaColor;
 
     #endregion
 
     #region PRIVATE_VARS
 
-    AbilityUsage abilityUsage;
+    private AbilityUsage abilityUsage;
+    private Color karmaColor;
 
     #endregion
 
